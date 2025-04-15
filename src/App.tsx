@@ -46,7 +46,7 @@ function App() {
 
   // when first/new card is selected fetch the corresponding transactions
   useEffect(() => {
-    if (!selectedCard) return
+    if (!selectedCard || isTransactionsLoading) return
     setIsTransactionsLoading(true)
     // reset filter on card change
     setAmountFrom('')
@@ -62,9 +62,18 @@ function App() {
     setFilteredTransactions(transactions)
   }, [transactions])
 
+  //handle on select new card
+  const handleCardSelect = (e: React.MouseEvent<HTMLDivElement>) => {
+    const newId = e.currentTarget.id
+    // avoids multiple fetch requests and resetting transactions (and filterTransactions)
+    if (isTransactionsLoading || newId === selectedCard) return
+    setTransactions([])
+    if (newId) setSelectedCard(newId)
+  }
+
   // handle submit filter
   // could also apply filter onChange instead, discuss
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+  const handleFilterSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault()
     if (!amountFrom) setTransactions(transactions)
     // filter logic here
@@ -76,22 +85,39 @@ function App() {
   if (isCardsLoading) return <CreditCard description="loading" id="loading" isLoading isSelected />
   if (cardsError) return <p style={{ color: 'red' }}>Error: {cardsError}</p>
 
+  const selectedCardData = cards.find((card) => card.id === selectedCard)
+
   return (
     <Layout>
       {/*selected card plus all other available cards */}
       <CardsContainer>
-        <CreditCard description="Selected card" id={selectedCard} isSelected />
+        {selectedCardData && (
+          <CreditCard
+            id={selectedCardData.id}
+            description={selectedCardData.description}
+            isSelected
+          />
+        )}
+
         {/*a container of the rest of available cards */}
         <CardListContainer>
           {cards.length > 0 &&
-            cards.map(({ id, description }) => (
-              <CreditCard description={description} id={id} key={id} />
-            ))}
+            cards.map(
+              ({ id, description }) =>
+                id !== selectedCard && (
+                  <CreditCard
+                    description={description}
+                    id={id}
+                    key={id}
+                    onClick={handleCardSelect}
+                  />
+                ),
+            )}
         </CardListContainer>
       </CardsContainer>
       {/*input filter by amount, filter on enter press*/}
       <FilterContainer>
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={handleFilterSubmit}>
           <label htmlFor="search">Filter amount from:</label>
           <Input
             id="search"

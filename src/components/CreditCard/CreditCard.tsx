@@ -4,9 +4,9 @@ import styled from 'styled-components'
 interface CreditCardProps {
   id: string
   description: string
+  onClick?: React.MouseEventHandler<HTMLDivElement>
   isSelected?: boolean
   isLoading?: boolean
-  isError?: boolean
 }
 
 // using article as it represents a self-contained composition
@@ -21,6 +21,7 @@ const CardContainer = styled.article<{ $isSelected?: boolean }>`
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   position: relative;
   overflow: hidden;
+  cursor: pointer;
 `
 
 // $ is necessary to identify isLoading as a transient property (avoids react complaining the attribute doesn't exist)
@@ -70,9 +71,10 @@ const CreditCard: React.FC<CreditCardProps> = ({
   description,
   isSelected,
   isLoading = false,
+  onClick,
 }) => {
   return (
-    <CardContainer id={id} aria-busy={isLoading} $isSelected={isSelected}>
+    <CardContainer id={id} aria-busy={isLoading} $isSelected={isSelected} onClick={onClick}>
       <LoadingOverlay $isLoading={isLoading} aria-hidden="true" />
       <CardContent $isLoading={isLoading}>
         <CardTitle>{description}</CardTitle>
