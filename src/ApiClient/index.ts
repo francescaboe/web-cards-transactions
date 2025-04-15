@@ -27,6 +27,8 @@ export async function getCards(): Promise<Card[]> {
 }
 
 export async function getTransactions(cardId: string): Promise<Transaction[]> {
+  // simulate 1.5s delay
+  await new Promise((resolve) => setTimeout(resolve, 1500))
   const transactions: Record<string, Transaction[]> = await (
     await import('./data/transactions.json')
   ).default

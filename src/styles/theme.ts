@@ -18,6 +18,7 @@ export interface ThemeType {
     xl: string
   }
   typography: {
+    fontFamily: string
     fontSize: {
       small: string
       body: string
@@ -71,6 +72,7 @@ const theme: ThemeType = {
     xl: '2rem', // 32px
   },
   typography: {
+    fontFamily: '"Euclid Square",myriad-pro,sans-serif',
     fontSize: {
       small: '0.875rem', // 14px
       body: '1rem', // 16px

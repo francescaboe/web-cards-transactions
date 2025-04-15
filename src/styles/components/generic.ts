@@ -1,5 +1,9 @@
 import styled from 'styled-components'
 
+export const CardsContainer = styled.div`
+  display: flex;
+`
+
 export const CardListContainer = styled.div`
   display: flex;
   gap: ${(props) => props.theme.spacing.md};

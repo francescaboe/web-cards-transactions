@@ -35,7 +35,9 @@
 I like the clean design and I think it works with the right color scheme, but I would maybe suggest a few changes to the card selection and the filter:
 I would talk with the designers about making it more clear which card is currently selected, by changing not only the color/opacity but also the size,
 so I would keep the selected card the "normal" size and amke the other(s) a bit smaller, for what i find would be a more intuitive setup.
-And I would also suggest, for a later version to make the filter a range rather than an exact amount, or maybe even allow the user to choose a preset range (eg. +- 10, 20, 100 etc.)
+And I would also suggest, for a later version to think about making the filter a range rather than "from" amount,
+or maybe even allow the user to choose a preset range (eg. +- 10, 20, 100 etc.)
+For now i have only added a label that specifies that the amount is from and not the exact amount
 
 
 ## Further into the future
