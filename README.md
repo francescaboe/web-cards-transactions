@@ -1,19 +1,35 @@
 # TASK-101 Cards and Transactions Overview
 ------------------------------- MY NOTES -------------------------------
-## THE STACK
-- [ ] yarn + React + Vite + Typescript
-- [ ] Docker?
-- [ ] Eslint + prettier
-- [ ] styled components
-- 
+## THE STACK  - requirements
+- yarn + React + Vite + Typescript
+- Eslint + prettier, for clean code
+- styled components, for flexibility, straight forward implementation and consistent design
+  src/
+  ├── styles/
+  │   ├── theme.ts              # Theme variables and tokens
+  │   ├── globalStyles.ts       # Global styles using createGlobalStyle
+  │   ├── animations.ts         # ?Reusable animations
+  │   ├── mixins.ts             # Style mixins and helpers
+  │   ├── utils.ts              # Style utility functions
+  │   └── components/           # Reusable styled components
+  │       ├── buttons.ts
+  │       ├── containers.ts
+  │       ├── forms.ts
+  │       └── ...
+  ├── providers/
+  │   └── ThemeProvider.tsx     # Theme provider setup
+  └── ...
+
+- tsconfigPaths for absolute path (changes to vite.config and tsconfig.app.json)
+- semantic html
+- document/comment
 
 
 ## TO-DOs/MVP roadmap
 - [ ] install all necessary tools
-- [ ] setup Docker
-- [ ] create an error boundary?
 - [ ] create small design system (colors, and corner roundness)
-- [ ] add tests?
+- [ ] error, idle, loading states?
+- [ ] add example tests?
 
 
 ## My thoughts
@@ -27,7 +43,10 @@ And I would also suggest, for a later version to make the filter a range rather 
 For post mvp version I would
 - add translation/copy files, with i18n or similar
 - add testing
+- add error boundary
+- add 404 page
 - add light/dark mode
+- dockerize the app
 
 ## How to run 
 
