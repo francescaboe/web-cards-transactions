@@ -10,7 +10,6 @@
   │   ├── globalStyles.ts       # Global styles using createGlobalStyle
   │   ├── animations.ts         # ?Reusable animations
   │   ├── mixins.ts             # Style mixins and helpers
-  │   ├── utils.ts              # Style utility functions
   │   └── components/           # Reusable styled components
   │       ├── buttons.ts
   │       ├── containers.ts
