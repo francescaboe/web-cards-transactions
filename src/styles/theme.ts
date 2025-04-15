@@ -59,7 +59,7 @@ const theme: ThemeType = {
     primary: '#006ac7',
     secondary: '#2ad1c9',
     text: '#1F2937',
-    background: '#FFFFFF',
+    background: '#defafa',
     error: '#EF4444',
     success: '#348618',
   },

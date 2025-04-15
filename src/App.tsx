@@ -1,46 +1,72 @@
-import CreditCard from 'components/CreditCard/CreditCard.tsx'
-import { Card, getCards } from 'ApiClient'
 import { useEffect, useState } from 'react'
-import styled from 'styled-components'
+// components
+import CreditCard from 'components/CreditCard'
+import Transaction from 'components/Transaction'
+import Layout from 'components/Layout'
+// apis
+import { Card, getCards, Transaction as TransactionProps, getTransactions } from 'ApiClient'
+import {
+  CardListContainer,
+  FilterContainer,
+  TransactionListContainer,
+} from 'styles/components/generic.ts'
 
-const Button = styled.button`
-  background-color: ${(props) => props.theme.colors.primary};
-  color: white;
-  padding: ${(props) => `${props.theme.spacing.sm} ${props.theme.spacing.md}`};
-  border-radius: ${(props) => props.theme.borderRadius.medium};
-  font-size: ${(props) => props.theme.typography.fontSize.body};
-  font-weight: ${(props) => props.theme.typography.fontWeight.medium};
-  transition: ${(props) => props.theme.transitions.default};
-
-  &:hover {
-    background-color: ${(props) => props.theme.colors.secondary};
-  }
-`
+/**
+ * As this is a small component I have decided to manage everything directly inside App.tsx
+ * In a bigger project this would probably sit in its own page/tab
+ **/
 
 function App() {
   const [cards, setCards] = useState<Card[]>([])
-  const [isLoading, setIsLoading] = useState<boolean>(false)
+  const [isCardsLoading, setIsCardsLoading] = useState<boolean>(false)
   const [error, setError] = useState<string | null>(null)
 
+  // id of selected car
+  const [selectedCard, setSelectedCard] = useState<string>('')
+  const [transactions, setTransactions] = useState<TransactionProps[]>([])
+
   useEffect(() => {
-    setIsLoading(true)
+    // on component mount fetch the cards
+    setIsCardsLoading(true)
     getCards()
-      .then((data) => setCards(data))
+      .then((data) => {
+        setCards(data)
+        setSelectedCard(data[0].id)
+      })
       .catch((err) => setError(err.message))
-      .finally(() => setIsLoading(false))
+      .finally(() => setIsCardsLoading(false))
   }, [])
 
-  if (isLoading) return <p>Loading cards...</p>
+  useEffect(() => {
+    if (!selectedCard) return
+    // add transactions loading
+    // add reset filter on card change
+    // fetch correct transactions ofr the selected card
+    getTransactions(selectedCard).then((data) => setTransactions(data))
+  }, [selectedCard])
+
+  if (isCardsLoading) return <p>Loading cards...</p>
   if (error) return <p style={{ color: 'red' }}>Error: {error}</p>
 
   return (
-    <div>
-      <Button>Hello</Button>
-      {cards.length > 0 &&
-        cards.map(({ id, description }) => (
-          <CreditCard description={description} id={id} key={id} />
-        ))}
-    </div>
+    <Layout>
+      <span>SELECTED CARD: {selectedCard}</span>
+      <CardListContainer>
+        {cards.length > 0 &&
+          cards.map(({ id, description }) => (
+            <CreditCard description={description} id={id} key={id} />
+          ))}
+      </CardListContainer>
+      <FilterContainer>
+        <input type="number" />
+      </FilterContainer>
+      <TransactionListContainer>
+        {transactions.length > 0 &&
+          transactions.map(({ id, description, amount }) => (
+            <Transaction description={description} id={id} key={id} amount={amount} />
+          ))}
+      </TransactionListContainer>
+    </Layout>
   )
 }
 

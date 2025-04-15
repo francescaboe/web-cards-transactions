@@ -1,5 +1,11 @@
 // import { cards } from "./data/cards";
 // import { transactions } from "./data/transactions";
+
+/**
+ * Here I just added the error for no cards, to also test the error state in the component
+ * and changed the Promise type of getTransactions to Transactions[]
+ * amd linted, because I can't help myself :D
+ * */
 export interface Card {
   id: string
   description: string
@@ -20,7 +26,7 @@ export async function getCards(): Promise<Card[]> {
   throw new Error('No cards found')
 }
 
-export async function getTransactions(cardId: string): Promise<Card[]> {
+export async function getTransactions(cardId: string): Promise<Transaction[]> {
   const transactions: Record<string, Transaction[]> = await (
     await import('./data/transactions.json')
   ).default
