@@ -6,6 +6,7 @@ import Layout from 'components/Layout'
 import {
   CardListContainer,
   CardsContainer,
+  ErrorMessage,
   FilterContainer,
   TransactionListContainer,
 } from 'styles/components/generic.ts'
@@ -18,11 +19,6 @@ import useCardsAndTransactions from 'hooks/useCardsAndTransactions.ts'
  **/
 
 const arrayOfGhosts = [0, 1, 2]
-export const formatCurrency = (value: number) =>
-  new Intl.NumberFormat('de-DE', {
-    style: 'currency',
-    currency: 'EUR',
-  }).format(value)
 
 function App() {
   const {
@@ -52,7 +48,12 @@ function App() {
     onFilterValueChange(e.target.value)
   }
 
-  if (cardsError) return <p style={{ color: 'red' }}>Error: {cardsError}</p>
+  if (cardsError)
+    return (
+      <ErrorMessage role="alert" aria-live="assertive">
+        Error: fake error {cardsError}
+      </ErrorMessage>
+    )
 
   return (
     <Layout>
@@ -127,7 +128,7 @@ function App() {
             <Transaction id="loading" description="loading" amount={0} isLoading key={value} />
           ))}
         {/*error state*/}
-        {transactionsError && <p style={{ color: 'red' }}>Error: {transactionsError}</p>}
+        {transactionsError && <ErrorMessage>Error: {transactionsError}</ErrorMessage>}
         {/*all good state*/}
         {filteredTransactions.length > 0
           ? filteredTransactions.map(({ id, description, amount }) => (
