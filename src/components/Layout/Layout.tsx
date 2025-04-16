@@ -1,5 +1,5 @@
 import React from 'react'
-import { LayoutContainer } from 'components/Layout/styled.ts'
+import { LayoutContainer } from './Layout.styles.ts'
 
 interface LayoutProps {
   children: React.ReactNode

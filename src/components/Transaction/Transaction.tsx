@@ -1,5 +1,5 @@
 import React from 'react'
-import { TransactionItem, TransactionDetail, Skeleton } from './styled'
+import { TransactionItem, TransactionDetail, Skeleton } from './Transaction.styles'
 
 interface TransactionProp {
   id: string
