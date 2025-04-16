@@ -42,3 +42,8 @@ export const CenteredContent = styled.div`
   align-items: center;
   height: 30vh;
 `
+export const FilterLabel = styled.label`
+  font-weight: ${(props) => props.theme.typography.fontWeight.bold};
+  padding: ${(props) => `${props.theme.spacing.md} 0`};
+  margin: ${(props) => `${props.theme.spacing.md} 0`};
+`

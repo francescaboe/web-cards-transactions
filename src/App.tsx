@@ -9,6 +9,7 @@ import {
   CenteredContent,
   ErrorMessage,
   FilterContainer,
+  FilterLabel,
   TransactionListContainer,
 } from 'styles/components/generic.ts'
 import { Input } from 'styles/components/input.ts'
@@ -112,12 +113,13 @@ function App() {
 
       {/*input filter by amount, filter on value change*/}
       <FilterContainer>
-        <label htmlFor="filter-amount">Filter from:</label>
+        <FilterLabel htmlFor="filter-amount">Minimum Amount Filter</FilterLabel>
         <Input
           id="filter-amount"
-          type="number"
-          step="0.01"
-          min="0"
+          type="text"
+          inputMode="decimal"
+          pattern="[0-9]*"
+          placeholder="Amount"
           value={amountFrom}
           onChange={handleFilterChange}
           disabled={isCardsLoading || isTransactionsLoading || !!transactionsError}

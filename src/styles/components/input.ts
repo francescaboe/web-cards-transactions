@@ -2,7 +2,8 @@ import styled from 'styled-components'
 
 export const Input = styled.input`
   width: 100%;
-  padding: ${(props) => props.theme.spacing.sm} ${(props) => props.theme.spacing.md};
+  padding: ${(props) => `${props.theme.spacing.sm} ${props.theme.spacing.md}`};
+  margin: ${(props) => `${props.theme.spacing.sm} 0 `};
   font-size: ${(props) => props.theme.typography.fontSize.body};
   border: 1px solid ${(props) => props.theme.colors.text}30;
   border-radius: ${(props) => props.theme.borderRadius.small};
