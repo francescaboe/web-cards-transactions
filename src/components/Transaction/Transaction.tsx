@@ -1,4 +1,5 @@
 import React from 'react'
+import { TransactionItem, TransactionDetail, Skeleton } from './styled'
 
 interface TransactionProp {
   id: string
@@ -8,20 +9,15 @@ interface TransactionProp {
 }
 
 const Transaction: React.FC<TransactionProp> = ({ id, description, amount, isLoading }) => {
-  if (isLoading)
-    return (
-      <div>
-        <span>loading</span>
-        <span>loading </span>
-        <span>loading</span>
-      </div>
-    )
+  if (isLoading) {
+    return <Skeleton aria-busy="true" aria-label="Loading transaction" key={id} />
+  }
+
   return (
-    <div>
-      <span>{id}</span>
-      <span>{description}</span>
-      <span>{amount}</span>
-    </div>
+    <TransactionItem role="listitem" key={id}>
+      <TransactionDetail aria-label="Description">{description}</TransactionDetail>
+      <TransactionDetail aria-label="Amount">{amount}€</TransactionDetail>
+    </TransactionItem>
   )
 }
 

@@ -10,6 +10,7 @@ import {
   CardsContainer,
   FilterContainer,
   FilterLabel,
+  MainContent,
   TransactionListContainer,
 } from './App.styles.ts'
 import { Input } from 'styles/components/input.ts'
@@ -62,97 +63,98 @@ function App() {
 
   return (
     <Layout>
-      {/*selected card plus all other available cards */}
-      <CardsContainer>
-        {/* display skeleton when cards is fetching */}
-        {isCardsLoading ? (
-          <>
-            <CreditCard description="loading" id="loading-main" isLoading isSelected />
-            <CardListContainer>
-              {arrayOfGhosts.map((val) => (
+      <MainContent>
+        {/*selected card plus all other available cards */}
+        <CardsContainer>
+          {/* display skeleton when cards is fetching */}
+          {isCardsLoading ? (
+            <>
+              <CreditCard description="loading" id="loading-main" isLoading isSelected />
+              <CardListContainer>
+                {arrayOfGhosts.map((val) => (
+                  <CreditCard
+                    key={`ghost-${val}`}
+                    description="loading"
+                    id={`ghost-${val}`}
+                    isLoading
+                  />
+                ))}
+              </CardListContainer>
+            </>
+          ) : (
+            <>
+              {/*display selected card data*/}
+              {selectedCardData && (
                 <CreditCard
-                  key={`ghost-${val}`}
-                  description="loading"
-                  id={`ghost-${val}`}
-                  isLoading
+                  id={selectedCardData.id}
+                  description={selectedCardData.description}
+                  isSelected
                 />
-              ))}
-            </CardListContainer>
-          </>
-        ) : (
-          <>
-            {/*display selected card data*/}
-            {selectedCardData && (
-              <CreditCard
-                id={selectedCardData.id}
-                description={selectedCardData.description}
-                isSelected
-              />
-            )}
-            {/*other available cards*/}
-            <CardListContainer>
-              {cards.length > 0 &&
-                cards.map(
-                  ({ id, description }) =>
-                    id !== selectedCardId && (
-                      <CreditCard
-                        description={description}
-                        id={id}
-                        key={id}
-                        onClick={handleCardSelect}
-                      />
-                    ),
-                )}
-            </CardListContainer>
-          </>
-        )}
-        {/*edge case where the cards array is empty*/}
-        {!isCardsLoading && cards.length === 0 && (
-          <CenteredContent>No cards available</CenteredContent>
-        )}
-      </CardsContainer>
+              )}
+              {/*other available cards*/}
+              <CardListContainer>
+                {cards.length > 0 &&
+                  cards.map(
+                    ({ id, description }) =>
+                      id !== selectedCardId && (
+                        <CreditCard
+                          description={description}
+                          id={id}
+                          key={id}
+                          onClick={handleCardSelect}
+                        />
+                      ),
+                  )}
+              </CardListContainer>
+            </>
+          )}
+          {/*edge case where the cards array is empty*/}
+          {!isCardsLoading && cards.length === 0 && (
+            <CenteredContent>No cards available</CenteredContent>
+          )}
+        </CardsContainer>
 
-      {/*input filter by amount, filter on value change*/}
-      <FilterContainer>
-        <FilterLabel htmlFor="filter-amount">Minimum Amount Filter</FilterLabel>
-        <Input
-          id="filter-amount"
-          type="text"
-          inputMode="decimal"
-          pattern="[0-9]*"
-          placeholder="Amount"
-          value={amountFrom}
-          onChange={handleFilterChange}
-          disabled={isCardsLoading || isTransactionsLoading || !!transactionsError}
-        />
-      </FilterContainer>
-      {/*vertical list of transactions*/}
-      <TransactionListContainer>
-        {/*loading state*/}
-        {isTransactionsLoading &&
-          arrayOfGhosts.map((value) => (
-            <Transaction id="loading" description="loading" amount={0} isLoading key={value} />
-          ))}
-        {/*error state*/}
-        {transactionsError && (
-          <CenteredContent>
-            <ErrorMessage>Error: {transactionsError}</ErrorMessage>
-          </CenteredContent>
-        )}
-        {/*all good state*/}
-        {filteredTransactions.length > 0
-          ? filteredTransactions.map(({ id, description, amount }) => (
-              <Transaction description={description} id={id} key={id} amount={amount} />
-            ))
-          : !isTransactionsLoading &&
-            !transactionsError && (
-              <CenteredContent>
-                {amountFrom !== ''
-                  ? `No transactions above ${amountFrom}`
-                  : 'No transactions for this card'}
-              </CenteredContent>
-            )}
-      </TransactionListContainer>
+        {/*input filter by amount, filter on value change*/}
+        <FilterContainer>
+          <FilterLabel htmlFor="filter-amount">Minimum Amount Filter</FilterLabel>
+          <Input
+            id="filter-amount"
+            type="text"
+            inputMode="decimal"
+            pattern="[0-9]*"
+            placeholder="Amount"
+            value={amountFrom}
+            onChange={handleFilterChange}
+            disabled={isCardsLoading || isTransactionsLoading || !!transactionsError}
+          />
+        </FilterContainer>
+        {/*vertical list of transactions*/}
+        <TransactionListContainer>
+          {/*loading state*/}
+          {isTransactionsLoading &&
+            arrayOfGhosts.map((value) => (
+              <Transaction id="loading" description="loading" amount={0} isLoading key={value} />
+            ))}
+          {/*error state*/}
+          {transactionsError && (
+            <CenteredContent>
+              <ErrorMessage>Error: {transactionsError}</ErrorMessage>
+            </CenteredContent>
+          )}
+          {/*all good state*/}
+          {filteredTransactions.length > 0
+            ? filteredTransactions.map(({ id, description, amount }) => (
+                <Transaction description={description} id={id} key={id} amount={amount} />
+              ))
+            : !isCardsLoading &&
+              !isTransactionsLoading &&
+              !transactionsError && (
+                <CenteredContent>
+                  {amountFrom !== '' && `No transactions above ${amountFrom}`}
+                </CenteredContent>
+              )}
+        </TransactionListContainer>
+      </MainContent>
     </Layout>
   )
 }
