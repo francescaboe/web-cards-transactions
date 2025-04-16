@@ -6,6 +6,7 @@ import Layout from 'components/Layout'
 import {
   CardListContainer,
   CardsContainer,
+  CenteredContent,
   ErrorMessage,
   FilterContainer,
   TransactionListContainer,
@@ -50,9 +51,11 @@ function App() {
 
   if (cardsError)
     return (
-      <ErrorMessage role="alert" aria-live="assertive">
-        Error: fake error {cardsError}
-      </ErrorMessage>
+      <CenteredContent>
+        <ErrorMessage role="alert" aria-live="assertive">
+          Error: fake error {cardsError}
+        </ErrorMessage>
+      </CenteredContent>
     )
 
   return (
@@ -128,7 +131,11 @@ function App() {
             <Transaction id="loading" description="loading" amount={0} isLoading key={value} />
           ))}
         {/*error state*/}
-        {transactionsError && <ErrorMessage>Error: {transactionsError}</ErrorMessage>}
+        {transactionsError && (
+          <CenteredContent>
+            <ErrorMessage>Error: {transactionsError}</ErrorMessage>
+          </CenteredContent>
+        )}
         {/*all good state*/}
         {filteredTransactions.length > 0
           ? filteredTransactions.map(({ id, description, amount }) => (

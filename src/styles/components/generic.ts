@@ -36,3 +36,9 @@ export const ErrorMessage = styled.p`
   width: fit-content;
   white-space: pre-line;
 `
+export const CenteredContent = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 30vh;
+`
