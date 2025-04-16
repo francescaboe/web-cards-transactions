@@ -6,12 +6,14 @@ import Layout from 'components/Layout'
 // styled components
 import { CenteredContent, ErrorMessage } from 'styles/components/generic.ts'
 import {
-  CardListContainer,
-  CardsContainer,
+  OtherCardsListContainer,
+  SelectedCardContainer,
+  AllCardsContainer,
   FilterContainer,
   FilterLabel,
   MainContent,
   TransactionListContainer,
+  CardWrapper,
 } from './App.styles.ts'
 import { Input } from 'styles/components/input.ts'
 // hooks
@@ -65,54 +67,61 @@ function App() {
     <Layout>
       <MainContent>
         {/*selected card plus all other available cards */}
-        <CardsContainer>
+        <AllCardsContainer>
           {/* display skeleton when cards is fetching */}
           {isCardsLoading ? (
             <>
-              <CreditCard description="loading" id="loading-main" isLoading isSelected />
-              <CardListContainer>
+              <SelectedCardContainer>
+                <CreditCard description="loading" id="loading-main" isLoading isSelected />
+              </SelectedCardContainer>
+              <OtherCardsListContainer>
                 {arrayOfGhosts.map((val) => (
-                  <CreditCard
-                    key={`ghost-${val}`}
-                    description="loading"
-                    id={`ghost-${val}`}
-                    isLoading
-                  />
+                  <CardWrapper key={`ghost-${val}`}>
+                    <CreditCard
+                      key={`ghost-${val}`}
+                      description="loading"
+                      id={`ghost-${val}`}
+                      isLoading
+                    />
+                  </CardWrapper>
                 ))}
-              </CardListContainer>
+              </OtherCardsListContainer>
             </>
           ) : (
             <>
               {/*display selected card data*/}
-              {selectedCardData && (
-                <CreditCard
-                  id={selectedCardData.id}
-                  description={selectedCardData.description}
-                  isSelected
-                />
-              )}
-              {/*other available cards*/}
-              <CardListContainer>
+              <SelectedCardContainer>
+                {selectedCardData && (
+                  <CreditCard
+                    id={selectedCardData.id}
+                    description={selectedCardData.description}
+                    isSelected
+                  />
+                )}
+              </SelectedCardContainer>
+              <OtherCardsListContainer>
                 {cards.length > 0 &&
                   cards.map(
                     ({ id, description }) =>
                       id !== selectedCardId && (
-                        <CreditCard
-                          description={description}
-                          id={id}
-                          key={id}
-                          onClick={handleCardSelect}
-                        />
+                        <CardWrapper key={id}>
+                          <CreditCard
+                            description={description}
+                            id={id}
+                            key={id}
+                            onClick={handleCardSelect}
+                          />
+                        </CardWrapper>
                       ),
                   )}
-              </CardListContainer>
+              </OtherCardsListContainer>
             </>
           )}
           {/*edge case where the cards array is empty*/}
           {!isCardsLoading && cards.length === 0 && (
             <CenteredContent>No cards available</CenteredContent>
           )}
-        </CardsContainer>
+        </AllCardsContainer>
 
         {/*input filter by amount, filter on value change*/}
         <FilterContainer>
@@ -150,7 +159,7 @@ function App() {
               !isTransactionsLoading &&
               !transactionsError && (
                 <CenteredContent>
-                  {amountFrom !== '' && `No transactions above ${amountFrom}`}
+                  {amountFrom !== '' && `No transactions above ${amountFrom}€`}
                 </CenteredContent>
               )}
         </TransactionListContainer>

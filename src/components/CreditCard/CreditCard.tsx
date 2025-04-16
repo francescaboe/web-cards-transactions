@@ -21,9 +21,7 @@ const CreditCard: React.FC<CreditCardProps> = ({
       <LoadingOverlay $isLoading={isLoading} aria-hidden="true" />
       <CardContent $isLoading={isLoading}>
         <CardTitle>{description}</CardTitle>
-        <CardId>
-          ID: <span aria-label="balance amount">{id}</span>
-        </CardId>
+        <CardId $isSelected={isSelected}>ID: {id}</CardId>
         {/* Other card content */}
       </CardContent>
     </CardContainer>
