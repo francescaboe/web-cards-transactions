@@ -3,16 +3,17 @@ import React from 'react'
 import CreditCard from 'components/CreditCard'
 import Transaction from 'components/Transaction'
 import Layout from 'components/Layout'
+// styled components
+import { CenteredContent, ErrorMessage } from 'styles/components/generic.ts'
 import {
   CardListContainer,
   CardsContainer,
-  CenteredContent,
-  ErrorMessage,
   FilterContainer,
   FilterLabel,
   TransactionListContainer,
-} from 'styles/components/generic.ts'
+} from './App.styles.ts'
 import { Input } from 'styles/components/input.ts'
+// hooks
 import useCardsAndTransactions from 'hooks/useCardsAndTransactions.ts'
 
 /**
@@ -107,7 +108,7 @@ function App() {
         )}
         {/*edge case where the cards array is empty*/}
         {!isCardsLoading && cards.length === 0 && (
-          <p style={{ color: 'gray' }}>No cards available</p>
+          <CenteredContent>No cards available</CenteredContent>
         )}
       </CardsContainer>
 
@@ -145,11 +146,11 @@ function App() {
             ))
           : !isTransactionsLoading &&
             !transactionsError && (
-              <span>
+              <CenteredContent>
                 {amountFrom !== ''
                   ? `No transactions above ${amountFrom}`
                   : 'No transactions for this card'}
-              </span>
+              </CenteredContent>
             )}
       </TransactionListContainer>
     </Layout>
