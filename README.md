@@ -11,9 +11,8 @@
   │   ├── animations.ts         # ?Reusable animations
   │   ├── mixins.ts             # Style mixins and helpers
   │   └── components/           # Reusable styled components
-  │       ├── buttons.ts
+  │       ├── generic.ts
   │       ├── containers.ts
-  │       ├── forms.ts
   │       └── ...
   ├── providers/
   │   └── ThemeProvider.tsx     # Theme provider setup
@@ -25,21 +24,32 @@
 
 
 ## TO-DOs/MVP roadmap
-- [ ] install all necessary tools
-- [ ] create small design system (colors, and corner roundness)
+- [x] install all necessary tools
+- [x] create small design system (colors, and corner roundness)
 - [ ] error, idle, loading states?
 - [ ] add example tests?
 
+test cases
+- only one card
+- more than two cards
+- no cards?
+- no transactions?
+- - fetch cards or fetch transactions error
 
 ## My thoughts
+Assuming that the card list is not very big but possibly > 2
+
 I like the clean design and I think it works with the right color scheme, but I would maybe suggest a few changes to the card selection and the filter:
 I would talk with the designers about making it more clear which card is currently selected, by changing not only the color/opacity but also the size,
 so I would keep the selected card the "normal" size and amke the other(s) a bit smaller, for what i find would be a more intuitive setup.
+
+
 And I would also suggest, for a later version to think about making the filter a range rather than "from" amount,
 or maybe even allow the user to choose a preset range (eg. +- 10, 20, 100 etc.)
-For now i have only added a label that specifies that the amount is from and not the exact amount
+For now I have only added a label that specifies that the amount is from and not the exact amount
 
-
+I added more cards and more transactions for testing purposes, some cards don't have corresponding trnasactions
+so it shows and error
 ## Further into the future
 For post mvp version I would
 - add translation/copy files, with i18n or similar
@@ -48,8 +58,10 @@ For post mvp version I would
 - add 404 page
 - add light/dark mode
 - dockerize the app
+- consider separating the cards and transaction logics into two separate hooks 
 
 ## How to run 
+to run `yarn ` and then `yarn dev`
 
 
 
@@ -83,11 +95,11 @@ If you feel like the design does not make sense, adjust it and note how you woul
 
 ## AC
 
-- User can select one of the cards
-- The transactions of the selected card will be displayed.
+- User can select one of the cards ✅
+- The transactions of the selected card will be displayed.✅
 - The transactions have a same background color than the card.
-- There should be a filter field between the cards and the transactions.
-- The user can filter transactions by inputting amount to the filter fields. Transactions with the amount in the fields or greater should be left visible.
+- There should be a filter field between the cards and the transactions. ✅
+- The user can filter transactions by inputting amount to the filter fields. Transactions with the amount in the fields or greater should be left visible. ✅ BUT need fix filtering float  
 - If the user changes a selected card and there is content in the filter fields, the content should be resetted.
 
 ## Deliverables

@@ -7,10 +7,17 @@
   "elek-n3lk-4m3lk4": [
     { "id": "lkmlk-5kkm5-55gg", "amount": 21.88, "description": "T-Shirt" },
     { "id": "43mm3-lkm4-55gg", "amount": 533.48, "description": "Smart Phone" },
-    {
-      "id": "eefe-5kkm5-ffeefe",
-      "amount": 2.58,
-      "description": "Chocolate Bar"
-    }
-  ]
+    { "id": "eefe-5kkm5-ffeefe", "amount": 2.58, "description": "Chocolate Bar" },
+    { "id": "abc1-def2-ghi3", "amount": 45.99, "description": "Running Shoes" },
+    { "id": "jkl4-mno5-pqr6", "amount": 12.99, "description": "Movie Ticket" },
+    { "id": "stu7-vwx8-yz90", "amount": 89.99, "description": "Headphones" },
+    { "id": "123a-456b-789c", "amount": 5.99, "description": "Coffee" },
+    { "id": "def1-ghi2-jkl3", "amount": 150.00, "description": "Groceries" },
+    { "id": "mno4-pqr5-stu6", "amount": 29.99, "description": "Book" },
+    { "id": "vwx7-yz89-abc0", "amount": 65.50, "description": "Gas" },
+    { "id": "123d-456e-789f", "amount": 42.99, "description": "Restaurant" },
+    { "id": "ghi1-jkl2-mno3", "amount": 199.99, "description": "Monitor" },
+    { "id": "pqr4-stu5-vwx6", "amount": 17.50, "description": "Pizza" }
+  ],
+  "abc123-def456-ghi789": []
 }
