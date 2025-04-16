@@ -1,7 +1,7 @@
 import styled from 'styled-components'
-// max-width to 1200 for large screens
+// max-width to 1100 for large screens
 export const LayoutContainer = styled.div`
-  max-width: 1200px;
+  max-width: 1000px;
   margin: 0 auto;
   padding: ${({ theme }) => `${theme.spacing.lg} ${theme.spacing.md}`};
 

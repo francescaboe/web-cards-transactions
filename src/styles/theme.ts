@@ -57,8 +57,8 @@ export interface ThemeType {
 
 const theme: ThemeType = {
   colors: {
-    primary: '#006ac7',
-    secondary: '#2ad1c9',
+    primary: '#64b4e0',
+    secondary: '#7c7c7b',
     text: '#1F2937',
     background: '#fdfdfe',
     error: '#EF4444',

@@ -16,7 +16,8 @@ const CardContainer = styled.article<{ $isSelected?: boolean }>`
   opacity: ${(props) => (props.$isSelected ? 1 : 0.8)};
   border-radius: ${(props) => props.theme.borderRadius.medium};
   padding: ${(props) => props.theme.spacing.md};
-  background: ${(props) => props.theme.colors.primary};
+  background: ${(props) =>
+    props.$isSelected ? props.theme.colors.primary : props.theme.colors.secondary};
   color: white;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   position: relative;
