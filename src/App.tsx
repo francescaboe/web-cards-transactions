@@ -159,7 +159,9 @@ function App() {
               !isTransactionsLoading &&
               !transactionsError && (
                 <CenteredContent>
-                  {amountFrom !== '' && `No transactions above ${amountFrom}€`}
+                  {amountFrom !== ''
+                    ? `No transactions above ${amountFrom}€`
+                    : 'No transactions for this card'}
                 </CenteredContent>
               )}
         </TransactionListContainer>

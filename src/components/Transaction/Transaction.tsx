@@ -1,5 +1,11 @@
 import React from 'react'
-import { TransactionItem, TransactionDetail, Skeleton } from './Transaction.styles'
+import {
+  TransactionItem,
+  TransactionDetail,
+  LoadingOverlay,
+  AmountDetail,
+  TransactionContent,
+} from './Transaction.styles'
 
 interface TransactionProp {
   id: string
@@ -9,14 +15,17 @@ interface TransactionProp {
 }
 
 const Transaction: React.FC<TransactionProp> = ({ id, description, amount, isLoading }) => {
-  if (isLoading) {
-    return <Skeleton aria-busy="true" aria-label="Loading transaction" key={id} />
-  }
-
   return (
-    <TransactionItem role="listitem" key={id}>
-      <TransactionDetail aria-label="Description">{description}</TransactionDetail>
-      <TransactionDetail aria-label="Amount">{amount}€</TransactionDetail>
+    <TransactionItem role="listitem" key={id} $isLoading={isLoading} aria-busy={isLoading}>
+      <LoadingOverlay $isLoading={isLoading} aria-hidden="true" />
+      <TransactionContent>
+        <TransactionDetail aria-label="Description" $isLoading={isLoading}>
+          {isLoading ? 'Loading...' : description}
+        </TransactionDetail>
+        <AmountDetail aria-label="Amount" $isLoading={isLoading}>
+          {isLoading ? '--' : `${amount}€`}
+        </AmountDetail>
+      </TransactionContent>
     </TransactionItem>
   )
 }
