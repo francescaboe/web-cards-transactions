@@ -1,11 +1,11 @@
 import { useEffect, useState } from 'react'
 import { Card, getCards, getTransactions, Transaction as TransactionProps } from 'ApiClient'
 /**
- A hook to manage fetching and filtering operations separately.
+ A hook to manage fetching and filtering operations separately from the ui.
  Return
  - cards array plus their loading and error states
  - transactions array of the selected card, plus their loading and error states
- - filter form state that allows to set and display the filter value
+ - filter input state that allows to set and display the filter value
 
  * */
 function useCardsAndTransactions() {
@@ -60,19 +60,20 @@ function useCardsAndTransactions() {
     setSelectedCardId(cardId)
   }
 
-  // handle transactions filtering
-  const onFilterTransactions = () => {
-    if (!amountFrom) setTransactions(transactions)
-    // filter logic here
-    setFilteredTransactions(
-      transactions.filter((transaction) => transaction.amount >= Number(amountFrom)),
-    )
-  }
-
-  // handle filter value change
+  // handle filter value change and subsequent filtering
   const onFilterValueChange = (newAmount: string) => {
     setAmountFrom(newAmount)
   }
+
+  // apply filter to displayed transactions whenever filter value changes
+  // could maybe also implement execution delay? discuss
+  useEffect(() => {
+    if (!amountFrom) setFilteredTransactions(transactions)
+    // filter transactions
+    setFilteredTransactions(
+      transactions.filter((transaction) => transaction.amount >= Number(amountFrom)),
+    )
+  }, [amountFrom, transactions])
 
   return {
     // card stuff
@@ -88,7 +89,6 @@ function useCardsAndTransactions() {
     filteredTransactions,
     isTransactionsLoading,
     transactionsError,
-    onFilterTransactions,
 
     // form stuff
     amountFrom,

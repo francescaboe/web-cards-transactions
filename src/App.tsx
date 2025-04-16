@@ -37,7 +37,6 @@ function App() {
     filteredTransactions,
     isTransactionsLoading,
     transactionsError,
-    onFilterTransactions,
     // form stuff
     amountFrom,
     onFilterValueChange,
@@ -45,17 +44,10 @@ function App() {
 
   //handle on select new card
   const handleCardSelect = (e: React.MouseEvent<HTMLDivElement>) => {
-    const newId = e.currentTarget.id
-    onCardSelect(newId)
+    onCardSelect(e.currentTarget.id)
   }
 
-  // handle submit filter
-  // could also apply filter onChange instead, discuss
-  const handleFilterSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault()
-    onFilterTransactions()
-  }
-
+  // handle filter amount change
   const handleFilterChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     onFilterValueChange(e.target.value)
   }
@@ -93,18 +85,16 @@ function App() {
       </CardsContainer>
       {/*input filter by amount, filter on enter press*/}
       <FilterContainer>
-        <form onSubmit={handleFilterSubmit}>
-          <label htmlFor="search">Filter amount from:</label>
-          <Input
-            id="search"
-            type="number"
-            step="0.01"
-            min="0"
-            value={amountFrom}
-            onChange={handleFilterChange}
-            disabled={isCardsLoading || isTransactionsLoading}
-          />
-        </form>
+        <label htmlFor="search">Filter amount from:</label>
+        <Input
+          id="search"
+          type="number"
+          step="0.01"
+          min="0"
+          value={amountFrom}
+          onChange={handleFilterChange}
+          disabled={isCardsLoading || isTransactionsLoading}
+        />
       </FilterContainer>
       {/*vertical list of transactions*/}
       <TransactionListContainer>
