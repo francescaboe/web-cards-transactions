@@ -24,6 +24,8 @@ function useCardsAndTransactions() {
 
   // on component mount fetch the cards
   useEffect(() => {
+    setCardsError(null)
+    setTransactionsError(null)
     setIsCardsLoading(true)
     getCards()
       .then((data) => {
@@ -37,6 +39,8 @@ function useCardsAndTransactions() {
   // when first/new card is selected fetch the corresponding transactions
   useEffect(() => {
     if (!selectedCardId || isTransactionsLoading) return
+    setCardsError(null)
+    setTransactionsError(null)
     setIsTransactionsLoading(true)
     // reset filter on card change
     setAmountFrom('')

@@ -17,7 +17,7 @@ import useCardsAndTransactions from 'hooks/useCardsAndTransactions.ts'
  * In a bigger project this would probably sit in its own page/tab
  **/
 
-const arrayOfGhosts = Array.from(Array(10).keys())
+const arrayOfGhosts = [0, 1, 2]
 export const formatCurrency = (value: number) =>
   new Intl.NumberFormat('de-DE', {
     style: 'currency',
@@ -43,7 +43,7 @@ function App() {
   } = useCardsAndTransactions()
 
   //handle on select new card
-  const handleCardSelect = (e: React.MouseEvent<HTMLDivElement>) => {
+  const handleCardSelect = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
     onCardSelect(e.currentTarget.id)
   }
 
@@ -52,48 +52,71 @@ function App() {
     onFilterValueChange(e.target.value)
   }
 
-  if (isCardsLoading) return <CreditCard description="loading" id="loading" isLoading isSelected />
   if (cardsError) return <p style={{ color: 'red' }}>Error: {cardsError}</p>
 
   return (
     <Layout>
       {/*selected card plus all other available cards */}
       <CardsContainer>
-        {selectedCardData && (
-          <CreditCard
-            id={selectedCardData.id}
-            description={selectedCardData.description}
-            isSelected
-          />
-        )}
-
-        {/*a container of the rest of available cards */}
-        <CardListContainer>
-          {cards.length > 0 &&
-            cards.map(
-              ({ id, description }) =>
-                id !== selectedCardId && (
-                  <CreditCard
-                    description={description}
-                    id={id}
-                    key={id}
-                    onClick={handleCardSelect}
-                  />
-                ),
+        {/* display skeleton when cards is fetching */}
+        {isCardsLoading ? (
+          <>
+            <CreditCard description="loading" id="loading-main" isLoading isSelected />
+            <CardListContainer>
+              {arrayOfGhosts.map((val) => (
+                <CreditCard
+                  key={`ghost-${val}`}
+                  description="loading"
+                  id={`ghost-${val}`}
+                  isLoading
+                />
+              ))}
+            </CardListContainer>
+          </>
+        ) : (
+          <>
+            {/*display selected card data*/}
+            {selectedCardData && (
+              <CreditCard
+                id={selectedCardData.id}
+                description={selectedCardData.description}
+                isSelected
+              />
             )}
-        </CardListContainer>
+            {/*other available cards*/}
+            <CardListContainer>
+              {cards.length > 0 &&
+                cards.map(
+                  ({ id, description }) =>
+                    id !== selectedCardId && (
+                      <CreditCard
+                        description={description}
+                        id={id}
+                        key={id}
+                        onClick={handleCardSelect}
+                      />
+                    ),
+                )}
+            </CardListContainer>
+          </>
+        )}
+        {/*edge case where the cards array is empty*/}
+        {!isCardsLoading && cards.length === 0 && (
+          <p style={{ color: 'gray' }}>No cards available</p>
+        )}
       </CardsContainer>
-      {/*input filter by amount, filter on enter press*/}
+
+      {/*input filter by amount, filter on value change*/}
       <FilterContainer>
-        <label htmlFor="search">Filter amount from:</label>
+        <label htmlFor="filter-amount">Filter from:</label>
         <Input
-          id="search"
+          id="filter-amount"
           type="number"
           step="0.01"
           min="0"
           value={amountFrom}
           onChange={handleFilterChange}
-          disabled={isCardsLoading || isTransactionsLoading}
+          disabled={isCardsLoading || isTransactionsLoading || !!transactionsError}
         />
       </FilterContainer>
       {/*vertical list of transactions*/}
@@ -110,7 +133,8 @@ function App() {
           ? filteredTransactions.map(({ id, description, amount }) => (
               <Transaction description={description} id={id} key={id} amount={amount} />
             ))
-          : !isTransactionsLoading && (
+          : !isTransactionsLoading &&
+            !transactionsError && (
               <span>
                 {amountFrom !== ''
                   ? `No transactions above ${amountFrom}`
