@@ -1,10 +1,8 @@
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 // components
 import CreditCard from 'components/CreditCard'
 import Transaction from 'components/Transaction'
 import Layout from 'components/Layout'
-// apis
-import { Card, getCards, Transaction as TransactionProps, getTransactions } from 'ApiClient'
 import {
   CardListContainer,
   CardsContainer,
@@ -12,6 +10,7 @@ import {
   TransactionListContainer,
 } from 'styles/components/generic.ts'
 import { Input } from 'styles/components/input.ts'
+import useCardsAndTransactions from 'hooks/useCardsAndTransactions.ts'
 
 /**
  * As this is a small component I have decided to manage everything directly inside App.tsx
@@ -19,73 +18,50 @@ import { Input } from 'styles/components/input.ts'
  **/
 
 const arrayOfGhosts = Array.from(Array(10).keys())
+export const formatCurrency = (value: number) =>
+  new Intl.NumberFormat('de-DE', {
+    style: 'currency',
+    currency: 'EUR',
+  }).format(value)
 
 function App() {
-  const [cards, setCards] = useState<Card[]>([])
-  const [isCardsLoading, setIsCardsLoading] = useState<boolean>(false)
-  const [cardsError, setCardsError] = useState<string | null>(null)
-  const [selectedCard, setSelectedCard] = useState<string>('')
-  const [transactions, setTransactions] = useState<TransactionProps[]>([])
-  const [isTransactionsLoading, setIsTransactionsLoading] = useState<boolean>(false)
-  const [transactionsError, setTransactionsError] = useState<string | null>(null)
-  // support variable so to keep the original data (transactions) intact (useful for reset)
-  const [filteredTransactions, setFilteredTransactions] = useState<TransactionProps[]>([])
-  const [amountFrom, setAmountFrom] = useState<string>('')
-
-  // on component mount fetch the cards
-  useEffect(() => {
-    setIsCardsLoading(true)
-    getCards()
-      .then((data) => {
-        setCards(data)
-        setSelectedCard(data[0].id)
-      })
-      .catch((err) => setCardsError(err.message))
-      .finally(() => setIsCardsLoading(false))
-  }, [])
-
-  // when first/new card is selected fetch the corresponding transactions
-  useEffect(() => {
-    if (!selectedCard || isTransactionsLoading) return
-    setIsTransactionsLoading(true)
-    // reset filter on card change
-    setAmountFrom('')
-    // fetch correct transactions ofr the selected card
-    getTransactions(selectedCard)
-      .then((data) => setTransactions(data))
-      .catch((err) => setTransactionsError(err.message))
-      .finally(() => setIsTransactionsLoading(false))
-  }, [selectedCard])
-
-  // whenever transactions changes, update filtered transactions
-  useEffect(() => {
-    setFilteredTransactions(transactions)
-  }, [transactions])
+  const {
+    // card stuff
+    cards,
+    isCardsLoading,
+    cardsError,
+    selectedCardId,
+    selectedCardData,
+    onCardSelect,
+    // transaction stuff
+    filteredTransactions,
+    isTransactionsLoading,
+    transactionsError,
+    onFilterTransactions,
+    // form stuff
+    amountFrom,
+    onFilterValueChange,
+  } = useCardsAndTransactions()
 
   //handle on select new card
   const handleCardSelect = (e: React.MouseEvent<HTMLDivElement>) => {
     const newId = e.currentTarget.id
-    // avoids multiple fetch requests and resetting transactions (and filterTransactions)
-    if (isTransactionsLoading || newId === selectedCard) return
-    setTransactions([])
-    if (newId) setSelectedCard(newId)
+    onCardSelect(newId)
   }
 
   // handle submit filter
   // could also apply filter onChange instead, discuss
   const handleFilterSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault()
-    if (!amountFrom) setTransactions(transactions)
-    // filter logic here
-    setFilteredTransactions(() =>
-      transactions.filter((transaction) => transaction.amount >= Number(amountFrom)),
-    )
+    onFilterTransactions()
+  }
+
+  const handleFilterChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    onFilterValueChange(e.target.value)
   }
 
   if (isCardsLoading) return <CreditCard description="loading" id="loading" isLoading isSelected />
   if (cardsError) return <p style={{ color: 'red' }}>Error: {cardsError}</p>
-
-  const selectedCardData = cards.find((card) => card.id === selectedCard)
 
   return (
     <Layout>
@@ -104,7 +80,7 @@ function App() {
           {cards.length > 0 &&
             cards.map(
               ({ id, description }) =>
-                id !== selectedCard && (
+                id !== selectedCardId && (
                   <CreditCard
                     description={description}
                     id={id}
@@ -122,8 +98,10 @@ function App() {
           <Input
             id="search"
             type="number"
+            step="0.01"
+            min="0"
             value={amountFrom}
-            onChange={(e: React.ChangeEvent<HTMLInputElement>) => setAmountFrom(e.target.value)}
+            onChange={handleFilterChange}
             disabled={isCardsLoading || isTransactionsLoading}
           />
         </form>
