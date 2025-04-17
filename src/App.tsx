@@ -58,7 +58,7 @@ function App() {
     return (
       <CenteredContent>
         <ErrorMessage role="alert" aria-live="assertive">
-          Error: fake error {cardsError}
+          Error: {cardsError}
         </ErrorMessage>
       </CenteredContent>
     )

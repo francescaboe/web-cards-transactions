@@ -96,10 +96,14 @@ so it would look like it was in the background, to reinforce which transactions 
 What I didn't do, in the spirit of keeping the task within a smaller timeframe, but that would be nice to have
 - Add extensive testing
 - add translation/copy files, with i18n or similar
+- add mobile responsiveness?
 - add error boundary?
 - dockerize the app?
 
 
 Thank you for taking the time to review my Task!
 
-
+## Screenshots 
+![Card and transactions overview](docs/success.png)
+![Card and transactions overview](docs/loading.png)
+![Card and transactions overview](docs/error.png)

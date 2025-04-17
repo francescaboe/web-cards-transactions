@@ -43,11 +43,6 @@ export interface ThemeType {
     large: string
     round: string
   }
-  breakpoints: {
-    mobile: string
-    tablet: string
-    desktop: string
-  }
   transitions: {
     default: string
     fast: string
@@ -72,7 +67,7 @@ const theme: ThemeType = {
     xl: '2rem', // 32px
   },
   typography: {
-    fontFamily: '"Euclid Square",myriad-pro,sans-serif',
+    fontFamily: '"Euclid Square",myriad-pro,sans-serif', // same as webiste
     fontSize: {
       small: '0.875rem', // 14px
       body: '1rem', // 16px
@@ -96,11 +91,6 @@ const theme: ThemeType = {
     medium: '0.5rem',
     large: '0.75rem',
     round: '9999px',
-  },
-  breakpoints: {
-    mobile: '36em', // 576px
-    tablet: '48em', // 768px
-    desktop: '62em', // 992px
   },
   transitions: {
     default: '0.3s ease',

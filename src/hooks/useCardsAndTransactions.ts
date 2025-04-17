@@ -20,6 +20,8 @@ function useCardsAndTransactions() {
   const [isTransactionsLoading, setIsTransactionsLoading] = useState<boolean>(false)
   const [transactionsError, setTransactionsError] = useState<string | null>(null)
   const [filteredTransactions, setFilteredTransactions] = useState<TransactionProps[]>([])
+
+  // filter state
   const [amountFrom, setAmountFrom] = useState<string>('')
 
   // on component mount fetch the cards
@@ -36,7 +38,7 @@ function useCardsAndTransactions() {
       .finally(() => setIsCardsLoading(false))
   }, [])
 
-  // when first/new card is selected fetch the corresponding transactions
+  // when first/a new card is selected fetch the corresponding transactions
   useEffect(() => {
     if (!selectedCardId || isTransactionsLoading) return
     setCardsError(null)

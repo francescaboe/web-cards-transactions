@@ -7,6 +7,11 @@ import {
   TransactionContent,
 } from './Transaction.styles'
 
+/**
+ * Transaction component displays description and amount
+ * Handles loading states
+ */
+
 interface TransactionProp {
   id: string
   description: string

@@ -1,6 +1,10 @@
 import React from 'react'
 import { LayoutContainer } from './Layout.styles.ts'
 
+/**
+ * Layout component that can be expanded in the future
+ */
+
 interface LayoutProps {
   children: React.ReactNode
 }

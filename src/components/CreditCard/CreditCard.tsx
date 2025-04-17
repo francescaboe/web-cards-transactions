@@ -1,6 +1,11 @@
 import React from 'react'
 import { CardContainer, LoadingOverlay, CardContent, CardTitle, CardId } from './CreditCard.styles'
 
+/**
+ * CreditCard component, displays a (selectable) card with description and ID
+ * Handles loading states and selection styling
+ */
+
 interface CreditCardProps {
   id: string
   description: string
