@@ -2,7 +2,5 @@
   { "id": "lkmfkl-mlfkm-dlkfm", "description": "Private Card" },
   { "id": "elek-n3lk-4m3lk4", "description": "Business Card" },
   { "id": "abc123-def456-ghi789", "description": "Premium Card" },
-  { "id": "jkl012-mno345-pqr678", "description": "Student Card" },
-  { "id": "stu901-vwx234-yz5678", "description": "Family Card" },
-  { "id": "123abc-456def-789ghi", "description": "Corporate Card" }
+  { "id": "jkl012-mno345-pqr678", "description": "Student Card" }
 ]

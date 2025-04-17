@@ -1,72 +1,5 @@
 # TASK-101 Cards and Transactions Overview
-------------------------------- MY NOTES -------------------------------
-## THE STACK  - requirements
-- yarn + React + Vite + Typescript
-- Eslint + prettier, for clean code
-- styled components, for flexibility, straight forward implementation and consistent design
-  src/
-  ├── styles/
-  │   ├── theme.ts              # Theme variables and tokens
-  │   ├── globalStyles.ts       # Global styles using createGlobalStyle
-  │   ├── animations.ts         # ?Reusable animations
-  │   ├── mixins.ts             # Style mixins and helpers
-  │   └── components/           # Reusable styled components
-  │       ├── generic.ts
-  │       ├── containers.ts
-  │       └── ...
-  ├── providers/
-  │   └── ThemeProvider.tsx     # Theme provider setup
-  └── ...
-
-- tsconfigPaths for absolute path (changes to vite.config and tsconfig.app.json)
-- semantic html
-- document/comment
-
-
-## TO-DOs/MVP roadmap
-- [x] install all necessary tools
-- [x] create small design system (colors, and corner roundness)
-- [ ] error, idle, loading states?
-- [ ] add example tests?
-
-test cases
-- only one card
-- more than two cards
-- no cards?
-- no transactions?
-- - fetch cards or fetch transactions error
-
-## My thoughts
-Assuming that the card list is not very big but possibly > 2
-
-I like the clean design and I think it works with the right color scheme, but I would maybe suggest a few changes to the card selection and the filter:
-I would talk with the designers about making it more clear which card is currently selected, by changing not only the color/opacity but also the size,
-so I would keep the selected card the "normal" size and amke the other(s) a bit smaller, for what i find would be a more intuitive setup.
-
-
-And I would also suggest, for a later version to think about making the filter a range rather than "from" amount,
-or maybe even allow the user to choose a preset range (eg. +- 10, 20, 100 etc.)
-For now I have only added a label that specifies that the amount is from and not the exact amount
-
-I added more cards and more transactions for testing purposes, some cards don't have corresponding trnasactions
-so it shows and error
-## Further into the future
-For post mvp version I would
-- add translation/copy files, with i18n or similar
-- add testing
-- add error boundary
-- add 404 page
-- add light/dark mode
-- dockerize the app
-- consider separating the cards and transaction logics into two separate hooks 
-
-## How to run 
-to run `yarn ` and then `yarn dev`
-
-
-
-
-------------------------------- THE INSTRUCTIONS -------------------------------
+## ------------------------------- THE INSTRUCTIONS -------------------------------
 
 Hellow there!😁 first of all, thanks for taking the time and your interest in joining Code Factory!
 As part of joining our engineering, we share this simple challenge with you.
@@ -83,9 +16,9 @@ You will find an image in the folder /docs, it gives a visual overview of how th
 
 ## Notes
 
-Please install dependencies using `yarn`.
+Please install dependencies using `yarn`. ✅
 
-Typescript is a must.
+Typescript is a must. ✅
 
 We provided a fake ApiClient for you that fetches the data. If you want to improve this client and adjust it to your needs feel free to do so.
 
@@ -97,11 +30,76 @@ If you feel like the design does not make sense, adjust it and note how you woul
 
 - User can select one of the cards ✅
 - The transactions of the selected card will be displayed.✅
-- The transactions have a same background color than the card.
+- The transactions have a same background color than the card. ✅
 - There should be a filter field between the cards and the transactions. ✅
-- The user can filter transactions by inputting amount to the filter fields. Transactions with the amount in the fields or greater should be left visible. ✅ BUT need fix filtering float  
-- If the user changes a selected card and there is content in the filter fields, the content should be resetted.
+- The user can filter transactions by inputting amount to the filter fields. Transactions with the amount in the fields or greater should be left visible. ✅
 
 ## Deliverables
 
 - Share with us a zip file wtih your source code excluding the node_modules folder
+
+
+## ------------------------------- MY NOTES -------------------------------
+## How to run
+1. install dependencies: `yarn `
+2. run in dev mode: `yarn dev`
+
+## THE STACK
+- yarn + React + Vite + Typescript
+- Eslint + prettier, for clean code
+- styled components, for flexibility, straight forward implementation and consistent design
+  ```
+  src/
+  ├── styles/
+  │   ├── theme.ts              // theme object
+  │   ├── globalStyles.ts       
+  │   └── components/           // reusable styled components
+  │       ├── generic.ts
+  │       ├── input.ts
+  ├── providers/
+  │   └── ThemeProvider.tsx     // theme provider setup
+  └── ...
+  ```
+
+## My notes
+
+Hi there!
+this is my take on the Task :).
+
+Since it was a small challenge I decided to focus on the aspects that I thought would be most relevant for this type of component.
+I tried to lay out a base that could potentially be build upon.
+- I set up a simple design system/theme for design consistency
+- I simulated a flow with fetching, success and error states (for this purpose I added some extra data - one card doesn't have corresponding transactions; and I added a simulated delay in the fake APIs)
+- I build most of the ui directly in App.tsx for simplicity
+- I moved all the 'fetching' and filtering logic into a custom hook (`src/hooks/useCardsAndTransactions`) to keep App.tsx a bit cleaner
+
+In terms of the Design I made some changes, as I assumed that the cards.length could potentially be > 2.
+In normal circumstances I would of course clarify with the BE devs first :)
+
+- Assuming that the card list is > 2 (my choice)
+
+Assuming a user could have more than 2 cards, I would propose to the Designer to have the selected card on the left, with primary color background,
+
+And have the other cards inside a scrollable container with fixed height, where the user can "browse" all the other selectable cards,
+that are a bit smaller and of different color
+
+
+- Assuming that cards.length === 2
+
+I would talk with the Designer about tweaking the design slightly:
+I would make whatever card is not selected a bit smaller,
+so it would look like it was in the background, to reinforce which transactions the user is seeing.
+
+
+
+## Nice to-haves
+What I didn't do, in the spirit of keeping the task within a smaller timeframe, but that would be nice to have
+- Add extensive testing
+- add translation/copy files, with i18n or similar
+- add error boundary?
+- dockerize the app?
+
+
+Thank you for taking the time to review my Task!
+
+
