@@ -1,4 +1,5 @@
 # TASK-101 Cards and Transactions Overview
+scroll down for my notes :)
 ## ------------------------------- THE INSTRUCTIONS -------------------------------
 
 Hellow there!😁 first of all, thanks for taking the time and your interest in joining Code Factory!
