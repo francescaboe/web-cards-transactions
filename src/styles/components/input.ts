@@ -1,7 +1,6 @@
 import styled from 'styled-components'
 
 export const Input = styled.input`
-  width: 100%;
   padding: ${(props) => `${props.theme.spacing.sm} ${props.theme.spacing.md}`};
   margin: ${(props) => `${props.theme.spacing.sm} 0 `};
   font-size: ${(props) => props.theme.typography.fontSize.body};

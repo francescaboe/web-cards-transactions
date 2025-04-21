@@ -1,7 +1,6 @@
 import styled, { keyframes } from 'styled-components'
 
 export const TransactionItem = styled.article<{ $isLoading?: boolean }>`
-  width: 100%;
   display: flex;
   justify-content: space-between;
   align-items: center;

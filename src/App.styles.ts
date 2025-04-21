@@ -8,16 +8,15 @@ export const MainContent = styled.main`
 export const AllCardsContainer = styled.section`
   display: flex;
   align-items: center;
+  justify-content: space-between;
   gap: ${({ theme }) => theme.spacing.xl};
-  padding: ${({ theme }) => theme.spacing.xl};
+  padding: ${({ theme }) => theme.spacing.xl} 0;
   max-width: 1000px;
-  margin: 0 auto;
 `
 
 export const SelectedCardContainer = styled.div``
 
 export const OtherCardsListContainer = styled.div`
-  flex: 1;
   display: flex;
   flex-direction: column;
   overflow-y: scroll;
@@ -38,6 +37,8 @@ export const CardWrapper = styled.div`
 
 export const FilterContainer = styled.section`
   margin-bottom: ${(props) => props.theme.spacing.md};
+  display: flex;
+  flex-direction: column;
 `
 export const FilterLabel = styled.label`
   font-weight: ${(props) => props.theme.typography.fontWeight.bold};
