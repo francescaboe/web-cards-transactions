@@ -14,24 +14,12 @@ export const AllCardsContainer = styled.section`
   max-width: 1000px;
 `
 
-export const SelectedCardContainer = styled.div``
-
-export const OtherCardsListContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  overflow-y: scroll;
-  height: 200px;
-  gap: ${({ theme }) => theme.spacing.md};
-  padding: ${({ theme }) => theme.spacing.md} 0;
-  scrollbar-width: none;
-`
-
-export const CardWrapper = styled.div`
+export const CardWrapper = styled.div<{ $isSelected?: boolean; $isLoading?: boolean }>`
   flex: 0 0 auto;
   transition: transform ${({ theme }) => theme.transitions.default};
 
   &:hover {
-    transform: translateY(-10px);
+    transform: ${(props) => (props.$isSelected || props.$isLoading ? 'none' : 'translateY(-10px)')};
   }
 `
 

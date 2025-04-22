@@ -6,8 +6,6 @@ import Layout from 'components/Layout'
 // styled components
 import { CenteredContent, ErrorMessage } from 'styles/components/generic.ts'
 import {
-  OtherCardsListContainer,
-  SelectedCardContainer,
   AllCardsContainer,
   FilterContainer,
   FilterLabel,
@@ -33,7 +31,6 @@ function App() {
     isCardsLoading,
     cardsError,
     selectedCardId,
-    selectedCardData,
     onCardSelect,
     // transaction stuff
     filteredTransactions,
@@ -71,50 +68,25 @@ function App() {
           {/* display skeleton when cards is fetching */}
           {isCardsLoading ? (
             <>
-              <SelectedCardContainer>
-                <CreditCard description="loading" id="loading-main" isLoading isSelected />
-              </SelectedCardContainer>
-              <OtherCardsListContainer>
-                {arrayOfGhosts.map((val) => (
-                  <CardWrapper key={`ghost-${val}`}>
-                    <CreditCard
-                      key={`ghost-${val}`}
-                      description="loading"
-                      id={`ghost-${val}`}
-                      isLoading
-                    />
-                  </CardWrapper>
-                ))}
-              </OtherCardsListContainer>
+              <CreditCard description="loading" id="loading-main" isLoading isSelected />
+              <CardWrapper key={`ghost-`} $isLoading>
+                <CreditCard key={`ghost-`} description="loading" id={`ghost-`} isLoading />
+              </CardWrapper>
             </>
           ) : (
             <>
-              {/*display selected card data*/}
-              <SelectedCardContainer>
-                {selectedCardData && (
-                  <CreditCard
-                    id={selectedCardData.id}
-                    description={selectedCardData.description}
-                    isSelected
-                  />
-                )}
-              </SelectedCardContainer>
-              <OtherCardsListContainer>
-                {cards.length > 0 &&
-                  cards.map(
-                    ({ id, description }) =>
-                      id !== selectedCardId && (
-                        <CardWrapper key={id}>
-                          <CreditCard
-                            description={description}
-                            id={id}
-                            key={id}
-                            onClick={handleCardSelect}
-                          />
-                        </CardWrapper>
-                      ),
-                  )}
-              </OtherCardsListContainer>
+              {cards.length > 0 &&
+                cards.slice(0, 2).map(({ id, description }) => (
+                  <CardWrapper key={id} $isSelected={selectedCardId === id}>
+                    <CreditCard
+                      description={description}
+                      id={id}
+                      key={id}
+                      onClick={handleCardSelect}
+                      isSelected={selectedCardId === id}
+                    />
+                  </CardWrapper>
+                ))}
             </>
           )}
           {/*edge case where the cards array is empty*/}
