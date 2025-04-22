@@ -12,6 +12,10 @@ export const AllCardsContainer = styled.section`
   gap: ${({ theme }) => theme.spacing.xl};
   padding: ${({ theme }) => theme.spacing.xl} 0;
   max-width: 1000px;
+
+  @media screen and (max-width: 768px) {
+    flex-direction: column;
+  }
 `
 
 export const CardWrapper = styled.div<{ $isSelected?: boolean; $isLoading?: boolean }>`
