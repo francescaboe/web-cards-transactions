@@ -66,14 +66,16 @@ function App() {
   return (
     <Layout>
       <MainContent>
-        {/*selected card plus all other available cards */}
+        {/* CARDS SECTION */}
         <AllCardsContainer>
-          {/* display skeleton when cards is fetching */}
           {isCardsLoading ? (
             <>
+              {/* cards loading */}
+              {/*selected card*/}
               <SelectedCardContainer>
                 <CreditCard description="loading" id="loading-main" isLoading isSelected />
               </SelectedCardContainer>
+              {/*other cards*/}
               <OtherCardsListContainer>
                 {arrayOfGhosts.map((val) => (
                   <CardWrapper key={`ghost-${val}`}>
@@ -89,7 +91,8 @@ function App() {
             </>
           ) : (
             <>
-              {/*display selected card data*/}
+              {/*cards success*/}
+              {/*selected card*/}
               <SelectedCardContainer>
                 {selectedCardData && (
                   <CreditCard
@@ -99,6 +102,7 @@ function App() {
                   />
                 )}
               </SelectedCardContainer>
+              {/*other cards*/}
               <OtherCardsListContainer>
                 {cards.length > 0 &&
                   cards.map(
@@ -117,13 +121,13 @@ function App() {
               </OtherCardsListContainer>
             </>
           )}
-          {/*edge case where the cards array is empty*/}
+          {/*cards empty*/}
           {!isCardsLoading && cards.length === 0 && (
             <CenteredContent>No cards available</CenteredContent>
           )}
         </AllCardsContainer>
 
-        {/*input filter by amount, filter on value change*/}
+        {/* FILTER SECTION */}
         <FilterContainer>
           <FilterLabel htmlFor="filter-amount">Minimum Amount Filter</FilterLabel>
           <Input
@@ -137,20 +141,21 @@ function App() {
             disabled={isCardsLoading || isTransactionsLoading || !!transactionsError}
           />
         </FilterContainer>
-        {/*vertical list of transactions*/}
+
+        {/*TRANSACTIONS SECTION*/}
         <TransactionListContainer>
-          {/*loading state*/}
+          {/*transactions loading*/}
           {isTransactionsLoading &&
             arrayOfGhosts.map((value) => (
               <Transaction id="loading" description="loading" amount={0} isLoading key={value} />
             ))}
-          {/*error state*/}
+          {/*transactions error*/}
           {transactionsError && (
             <CenteredContent>
               <ErrorMessage>Error: {transactionsError}</ErrorMessage>
             </CenteredContent>
           )}
-          {/*all good state*/}
+          {/*transactions success*/}
           {filteredTransactions.length > 0
             ? filteredTransactions.map(({ id, description, amount }) => (
                 <Transaction description={description} id={id} key={id} amount={amount} />
