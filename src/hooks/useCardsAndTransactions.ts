@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import { Card, getCards, getTransactions, Transaction as TransactionProps } from 'ApiClient'
 /**
  A hook to manage fetching and filtering operations separately from the ui.
@@ -19,7 +19,7 @@ function useCardsAndTransactions() {
   const [transactions, setTransactions] = useState<TransactionProps[]>([])
   const [isTransactionsLoading, setIsTransactionsLoading] = useState<boolean>(false)
   const [transactionsError, setTransactionsError] = useState<string | null>(null)
-  const [filteredTransactions, setFilteredTransactions] = useState<TransactionProps[]>([])
+  //const [filteredTransactions, setFilteredTransactions] = useState<TransactionProps[]>([]) // alternatively: useMemo
 
   // filter state
   const [amountFrom, setAmountFrom] = useState<string>('')
@@ -54,9 +54,9 @@ function useCardsAndTransactions() {
   }, [selectedCardId])
 
   // whenever transactions changes, update filtered transactions
-  useEffect(() => {
+  /*  useEffect(() => {
     setFilteredTransactions(transactions)
-  }, [transactions])
+  }, [transactions])*/
 
   // handle new card selection
   const onCardSelect = (cardId: string) => {
@@ -73,13 +73,20 @@ function useCardsAndTransactions() {
 
   // apply filter to displayed transactions whenever filter value changes
   // could maybe also implement execution delay? discuss
-  useEffect(() => {
+  /*  useEffect(() => {
     if (!amountFrom) setFilteredTransactions(transactions)
     // filter transactions
     setFilteredTransactions(
       transactions.filter((transaction) => transaction.amount >= Number(amountFrom)),
     )
-  }, [amountFrom, transactions])
+  }, [amountFrom, transactions]) */
+
+  // refactor filteredTransactions to useMemo
+  const filteredTransactions = useMemo(() => {
+    if (!amountFrom) return transactions
+    // filter transactions
+    return transactions.filter((transaction) => transaction.amount >= Number(amountFrom))
+  }, [transactions, amountFrom])
 
   return {
     // card stuff
