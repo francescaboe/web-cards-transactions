@@ -58,6 +58,13 @@ function useCardsAndTransactions() {
     setFilteredTransactions(transactions)
   }, [transactions])*/
 
+  // refactor filteredTransactions to useMemo
+  const filteredTransactions = useMemo(() => {
+    if (!amountFrom) return transactions
+    // filter transactions
+    return transactions.filter((transaction) => transaction.amount >= Number(amountFrom))
+  }, [transactions, amountFrom])
+
   // handle new card selection
   const onCardSelect = (cardId: string) => {
     // prevent selecting a new card while already fetching or if the card is already selected
@@ -80,13 +87,6 @@ function useCardsAndTransactions() {
       transactions.filter((transaction) => transaction.amount >= Number(amountFrom)),
     )
   }, [amountFrom, transactions]) */
-
-  // refactor filteredTransactions to useMemo
-  const filteredTransactions = useMemo(() => {
-    if (!amountFrom) return transactions
-    // filter transactions
-    return transactions.filter((transaction) => transaction.amount >= Number(amountFrom))
-  }, [transactions, amountFrom])
 
   return {
     // card stuff
