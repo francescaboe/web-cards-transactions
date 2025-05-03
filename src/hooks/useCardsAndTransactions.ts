@@ -9,17 +9,16 @@ import { Card, getCards, getTransactions, Transaction as TransactionProps } from
 
  * */
 function useCardsAndTransactions() {
-  //cards state
+  // cards state
   const [cards, setCards] = useState<Card[]>([])
   const [isCardsLoading, setIsCardsLoading] = useState<boolean>(false)
   const [cardsError, setCardsError] = useState<string | null>(null)
   const [selectedCardId, setSelectedCardId] = useState<string>('')
 
-  //transactions state
+  // transactions state
   const [transactions, setTransactions] = useState<TransactionProps[]>([])
   const [isTransactionsLoading, setIsTransactionsLoading] = useState<boolean>(false)
   const [transactionsError, setTransactionsError] = useState<string | null>(null)
-  //const [filteredTransactions, setFilteredTransactions] = useState<TransactionProps[]>([]) // alternatively: useMemo
 
   // filter state
   const [amountFrom, setAmountFrom] = useState<string>('')
@@ -53,12 +52,7 @@ function useCardsAndTransactions() {
       .finally(() => setIsTransactionsLoading(false))
   }, [selectedCardId])
 
-  // whenever transactions changes, update filtered transactions
-  /*  useEffect(() => {
-    setFilteredTransactions(transactions)
-  }, [transactions])*/
-
-  // refactor filteredTransactions to useMemo
+  // whenever transactions or amountFrom changes, update memoized filtered transactions
   const filteredTransactions = useMemo(() => {
     if (!amountFrom) return transactions
     // filter transactions
@@ -77,16 +71,6 @@ function useCardsAndTransactions() {
   const onFilterValueChange = (newAmount: string) => {
     setAmountFrom(newAmount)
   }
-
-  // apply filter to displayed transactions whenever filter value changes
-  // could maybe also implement execution delay? discuss
-  /*  useEffect(() => {
-    if (!amountFrom) setFilteredTransactions(transactions)
-    // filter transactions
-    setFilteredTransactions(
-      transactions.filter((transaction) => transaction.amount >= Number(amountFrom)),
-    )
-  }, [amountFrom, transactions]) */
 
   return {
     // card stuff
