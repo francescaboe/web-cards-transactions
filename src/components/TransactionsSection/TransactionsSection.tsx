@@ -1,11 +1,13 @@
 import React from 'react'
 import Transaction from 'components/Transaction'
-import { CenteredContent, ErrorMessage } from 'styles/components/generic.ts'
+import ErrorState from 'components/ErrorState'
+import EmptyState from 'components/EmptyState'
+import TransactionsLoadingState from 'components/TransactionsSection/subcomponents/TransactionsLoadingState'
 import { TransactionListContainer } from './TransactionsSection.styles.ts'
-import { Transaction as TransactionProps } from 'ApiClient'
+import { Transaction as TransactionData } from 'ApiClient'
 
 interface TransactionsSectionProps {
-  filteredTransactions: TransactionProps[]
+  filteredTransactions: TransactionData[]
   isCardsLoading: boolean
   isTransactionsLoading: boolean
   transactionsError: string | null
@@ -19,33 +21,31 @@ const TransactionsSection: React.FC<TransactionsSectionProps> = ({
   filteredTransactions,
   isCardsLoading,
 }) => {
+  const isLoading = isTransactionsLoading
+  const hasError = !!transactionsError
+  const hasTransactions = filteredTransactions.length > 0
+  const isEmpty = !isCardsLoading && !isLoading && !hasError && !hasTransactions
+
   return (
     <TransactionListContainer>
-      {/*transactions loading*/}
-      {isTransactionsLoading &&
-        [1, 2, 3, 4].map((value) => (
-          <Transaction id="loading" description="loading" amount={0} isLoading key={value} />
+      {isLoading && <TransactionsLoadingState />}
+
+      {hasError && <ErrorState error={transactionsError} />}
+
+      {hasTransactions &&
+        filteredTransactions.map(({ id, description, amount }) => (
+          <Transaction description={description} id={id} key={id} amount={amount} />
         ))}
-      {/*transactions error*/}
-      {transactionsError && (
-        <CenteredContent>
-          <ErrorMessage>Error: {transactionsError}</ErrorMessage>
-        </CenteredContent>
+
+      {isEmpty && (
+        <EmptyState
+          message={
+            amountFrom !== ''
+              ? `No transactions above ${amountFrom}€`
+              : 'No transactions for this card'
+          }
+        />
       )}
-      {/*transactions success*/}
-      {filteredTransactions.length > 0
-        ? filteredTransactions.map(({ id, description, amount }) => (
-            <Transaction description={description} id={id} key={id} amount={amount} />
-          ))
-        : !isCardsLoading &&
-          !isTransactionsLoading &&
-          !transactionsError && (
-            <CenteredContent>
-              {amountFrom !== ''
-                ? `No transactions above ${amountFrom}€`
-                : 'No transactions for this card'}
-            </CenteredContent>
-          )}
     </TransactionListContainer>
   )
 }

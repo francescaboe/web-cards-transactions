@@ -7,12 +7,12 @@ import {
   SelectedCardContainer,
 } from './CardsSection.styles.ts'
 import { CenteredContent } from 'styles/components/generic.ts'
-import { Card } from 'ApiClient'
+import { Card as CardData } from 'ApiClient'
 
 interface CardsSectionProps {
   isCardsLoading: boolean
-  selectedCardData?: Card
-  cards: Card[]
+  selectedCardData?: CardData
+  cards: CardData[]
   selectedCardId: string
   onCardSelect: (id: string) => void
 }

@@ -1,13 +1,13 @@
 // components
 import Layout from 'components/Layout'
+import CardsSection from 'components/CardsSection'
 import FilterSection from 'components/FilterSection'
 import TransactionsSection from 'components/TransactionsSection'
+import ErrorState from 'components/ErrorState'
 // styled components
-import { CenteredContent, ErrorMessage } from 'styles/components/generic.ts'
 import { MainContent } from './App.styles.ts'
 // hooks
 import useCardsAndTransactions from 'hooks/useCardsAndTransactions.ts'
-import CardsSection from 'components/CardsSection'
 
 function App() {
   const {
@@ -27,14 +27,7 @@ function App() {
     onFilterValueChange,
   } = useCardsAndTransactions()
 
-  if (cardsError)
-    return (
-      <CenteredContent>
-        <ErrorMessage role="alert" aria-live="assertive">
-          Error: {cardsError}
-        </ErrorMessage>
-      </CenteredContent>
-    )
+  if (cardsError) return <ErrorState error={cardsError} />
 
   return (
     <Layout>
