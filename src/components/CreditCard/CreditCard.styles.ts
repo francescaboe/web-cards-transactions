@@ -1,7 +1,7 @@
 import styled from 'styled-components'
 
-// using article as it represents a self-contained composition
 export const CardContainer = styled.article<{ $isSelected?: boolean }>`
+  flex: 0 0 auto;
   width: ${(props) => (props.$isSelected ? '240px' : '180px')};
   height: ${(props) => (props.$isSelected ? '140px' : '80px')};
   background: ${(props) =>
@@ -23,6 +23,7 @@ export const CardContainer = styled.article<{ $isSelected?: boolean }>`
     &:hover {
       filter: brightness(110%);
       box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+      transform: translateY(-10px);
     }
   `}
 `

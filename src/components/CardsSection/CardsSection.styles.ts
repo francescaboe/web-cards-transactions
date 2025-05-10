@@ -42,6 +42,7 @@ export const CardsSectionContainer = styled.section``
 export const AllCardsContainer = styled.div`
   display: flex;
   align-items: center;
+  min-height: 250px;
   gap: ${({ theme }) => theme.spacing.xl};
   padding: ${({ theme }) => theme.spacing.xl} 0;
   overflow-x: scroll;
@@ -53,18 +54,5 @@ export const AllCardsContainer = styled.div`
   -ms-overflow-style: none; /* IE and Edge */
   &::-webkit-scrollbar {
     display: none;
-  }
-`
-
-export const SelectedCardContainer = styled.div`
-  flex: 0 0 auto;
-`
-
-export const CardWrapper = styled.div`
-  flex: 0 0 auto;
-  transition: transform ${({ theme }) => theme.transitions.default};
-
-  &:hover {
-    transform: translateY(-10px);
   }
 `

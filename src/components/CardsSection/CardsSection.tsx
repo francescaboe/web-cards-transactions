@@ -4,8 +4,6 @@ import EmptyState from 'components/EmptyState'
 import {
   CardsSectionContainer,
   AllCardsContainer,
-  CardWrapper,
-  SelectedCardContainer,
   ScrollButton,
   ScrollWrapper,
 } from './CardsSection.styles.ts'
@@ -42,9 +40,7 @@ const CardsSection: React.FC<CardsSectionProps> = ({
       {isLoading && (
         <AllCardsContainer>
           {[1, 2, 3].map((val) => (
-            <CardWrapper key={`ghost-${val}`}>
-              <CreditCard description="loading" id={`ghost-${val}`} isLoading />
-            </CardWrapper>
+            <CreditCard description="loading" id={`ghost-${val}`} isLoading key={val} />
           ))}
         </AllCardsContainer>
       )}
@@ -57,20 +53,15 @@ const CardsSection: React.FC<CardsSectionProps> = ({
 
           <AllCardsContainer ref={containerRef}>
             {cards.map(({ id, description }) =>
-              id !== selectedCardId ? (
-                <CardWrapper key={id}>
-                  <CreditCard description={description} id={id} onClick={handleCardSelect} />
-                </CardWrapper>
+              id === selectedCardId && selectedCardData ? (
+                <CreditCard
+                  id={selectedCardData.id}
+                  key={id}
+                  description={selectedCardData.description}
+                  isSelected
+                />
               ) : (
-                selectedCardData && (
-                  <SelectedCardContainer key={id}>
-                    <CreditCard
-                      id={selectedCardData.id}
-                      description={selectedCardData.description}
-                      isSelected
-                    />
-                  </SelectedCardContainer>
-                )
+                <CreditCard description={description} id={id} key={id} onClick={handleCardSelect} />
               ),
             )}
           </AllCardsContainer>
