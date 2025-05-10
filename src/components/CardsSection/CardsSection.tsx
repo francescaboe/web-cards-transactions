@@ -27,7 +27,7 @@ const CardsSection: React.FC<CardsSectionProps> = ({
 }) => {
   const { containerRef, scroll } = useHorizontalScrollControls()
 
-  const handleCardSelect = (e: React.MouseEvent<HTMLDivElement>) => {
+  const handleCardSelect = (e: React.MouseEvent<HTMLButtonElement>) => {
     onCardSelect(e.currentTarget.id)
   }
 
