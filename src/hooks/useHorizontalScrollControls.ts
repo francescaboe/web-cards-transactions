@@ -17,7 +17,7 @@ export function useHorizontalScrollControls(scrollAmountFallback = 300) {
       const container = containerRef.current
       if (!container) return
 
-      const firstCard = container.querySelector('div')
+      const firstCard = container.querySelector('button')
       const scrollAmount = firstCard
         ? (firstCard as HTMLElement).offsetWidth + 24 // adjust based on gap
         : scrollAmountFallback
