@@ -1,21 +1,18 @@
 import React from 'react'
 import { FilterContainer, FilterLabel, FilterInput } from './FilterSection.styles.ts'
+import { useTransactionsContext } from 'contex/TransactionsContext.tsx'
+import { useCardsContext } from 'contex/CardsContext.tsx'
 
-interface FilterSectionProps {
-  amountFrom: string
-  isCardsLoading: boolean
-  isTransactionsLoading: boolean
-  transactionsError: string | null
-  onFilterValueChange: (value: string) => void
-}
+const FilterSection: React.FC = () => {
+  const { isCardsLoading } = useCardsContext()
+  const {
+    originalTransactions,
+    amountFilter,
+    isTransactionsLoading,
+    transactionsError,
+    onFilterValueChange,
+  } = useTransactionsContext()
 
-const FilterSection: React.FC<FilterSectionProps> = ({
-  amountFrom,
-  isCardsLoading,
-  isTransactionsLoading,
-  transactionsError,
-  onFilterValueChange,
-}) => {
   // handle filter amount change
   const handleFilterChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     onFilterValueChange(e.target.value)
@@ -23,15 +20,20 @@ const FilterSection: React.FC<FilterSectionProps> = ({
 
   return (
     <FilterContainer>
-      <FilterLabel htmlFor="filter-amount">Minimum Amount Filter</FilterLabel>
+      <FilterLabel htmlFor="filter-amount">Filter</FilterLabel>
       <FilterInput
         id="filter-amount"
         type="number"
         step="0.01"
         placeholder="Amount"
-        value={amountFrom}
+        value={amountFilter}
         onChange={handleFilterChange}
-        disabled={isCardsLoading || isTransactionsLoading || !!transactionsError}
+        disabled={
+          isCardsLoading ||
+          isTransactionsLoading ||
+          !!transactionsError ||
+          originalTransactions.length === 0
+        }
       />
     </FilterContainer>
   )

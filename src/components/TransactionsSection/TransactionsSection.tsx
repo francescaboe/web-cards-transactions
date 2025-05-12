@@ -4,26 +4,17 @@ import ErrorState from 'components/ErrorState'
 import EmptyState from 'components/EmptyState'
 import TransactionsLoadingState from 'components/TransactionsSection/subcomponents/TransactionsLoadingState'
 import { TransactionListContainer } from './TransactionsSection.styles.ts'
-import { Transaction as TransactionData } from 'ApiClient'
+import { useTransactionsContext } from 'contex/TransactionsContext.tsx'
+import { useCardsContext } from 'contex/CardsContext.tsx'
 
-interface TransactionsSectionProps {
-  filteredTransactions: TransactionData[]
-  isCardsLoading: boolean
-  isTransactionsLoading: boolean
-  transactionsError: string | null
-  amountFrom: string
-}
+const TransactionsSection: React.FC = () => {
+  const { amountFilter, isTransactionsLoading, transactionsError, displayedTransactions } =
+    useTransactionsContext()
+  const { isCardsLoading } = useCardsContext()
 
-const TransactionsSection: React.FC<TransactionsSectionProps> = ({
-  amountFrom,
-  isTransactionsLoading,
-  transactionsError,
-  filteredTransactions,
-  isCardsLoading,
-}) => {
   const isLoading = isTransactionsLoading
   const hasError = !!transactionsError
-  const hasTransactions = filteredTransactions.length > 0
+  const hasTransactions = displayedTransactions.length > 0
   const isEmpty = !isCardsLoading && !isLoading && !hasError && !hasTransactions
 
   return (
@@ -33,15 +24,15 @@ const TransactionsSection: React.FC<TransactionsSectionProps> = ({
       {hasError && <ErrorState error={transactionsError} />}
 
       {hasTransactions &&
-        filteredTransactions.map(({ id, description, amount }) => (
+        displayedTransactions.map(({ id, description, amount }) => (
           <Transaction description={description} id={id} key={id} amount={amount} />
         ))}
 
       {isEmpty && (
         <EmptyState
           message={
-            amountFrom !== ''
-              ? `No transactions above ${amountFrom}€`
+            amountFilter !== ''
+              ? `No transactions above ${amountFilter}€`
               : 'No transactions for this card'
           }
         />

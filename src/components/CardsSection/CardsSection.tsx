@@ -8,24 +8,12 @@ import {
   ScrollWrapper,
 } from './CardsSection.styles.ts'
 import { useHorizontalScrollControls } from 'hooks/useHorizontalScrollControls'
-import { Card as CardData } from 'ApiClient'
+import { useCardsContext } from 'contex/CardsContext.tsx'
 
-interface CardsSectionProps {
-  isCardsLoading: boolean
-  selectedCardData?: CardData
-  cards: CardData[]
-  selectedCardId: string
-  onCardSelect: (id: string) => void
-}
-
-const CardsSection: React.FC<CardsSectionProps> = ({
-  isCardsLoading,
-  selectedCardData,
-  cards,
-  selectedCardId,
-  onCardSelect,
-}) => {
+const CardsSection: React.FC = () => {
   const { containerRef, scroll } = useHorizontalScrollControls()
+  const { cards, isCardsLoading, selectedCardData, selectedCardId, onCardSelect } =
+    useCardsContext()
 
   const handleCardSelect = (e: React.MouseEvent<HTMLButtonElement>) => {
     onCardSelect(e.currentTarget.id)
