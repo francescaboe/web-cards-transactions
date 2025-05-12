@@ -1,9 +1,13 @@
 import styled from 'styled-components'
 
-// using article as it represents a self-contained composition
-export const CardContainer = styled.article<{ $isSelected?: boolean }>`
+export const CardContainer = styled.button<{ $isSelected?: boolean; $isLoading?: boolean }>`
+  all: unset;
+  flex: 0 0 auto;
+  opacity: ${(props) => (props.$isLoading ? 0.5 : 1)};
   width: ${(props) => (props.$isSelected ? '240px' : '180px')};
   height: ${(props) => (props.$isSelected ? '140px' : '80px')};
+  display: flex;
+  flex-direction: column;
   background: ${(props) =>
     props.$isSelected
       ? ({ theme }) => theme.colors.primary
@@ -17,12 +21,18 @@ export const CardContainer = styled.article<{ $isSelected?: boolean }>`
   position: relative;
   overflow: hidden;
 
+  &:focus {
+    outline: 2px solid ${({ theme }) => theme.colors.primary};
+    outline-offset: 2px;
+  }
+
   ${(props) =>
     !props.$isSelected &&
     `
     &:hover {
       filter: brightness(110%);
       box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+      transform: translateY(-10px);
     }
   `}
 `
@@ -44,11 +54,7 @@ export const LoadingOverlay = styled.div<{ $isLoading?: boolean }>`
   }
 `
 
-export const CardContent = styled.div<{ $isLoading?: boolean }>`
-  opacity: ${(props) => (props.$isLoading ? 0.5 : 1)};
-`
-
-export const CardTitle = styled.h3<{ $isSelected?: boolean }>`
+export const CardTitle = styled.span<{ $isSelected?: boolean }>`
   margin: 0 0 ${({ theme }) => theme.spacing.md} 0;
   font-size: ${(props) =>
     props.$isSelected
@@ -58,7 +64,7 @@ export const CardTitle = styled.h3<{ $isSelected?: boolean }>`
   line-height: ${({ theme }) => theme.typography.lineHeight.heading};
 `
 
-export const CardId = styled.p<{ $isSelected?: boolean }>`
+export const CardId = styled.span<{ $isSelected?: boolean }>`
   margin: 0;
   font-size: ${(props) =>
     props.$isSelected

@@ -1,5 +1,5 @@
 import React from 'react'
-import { CardContainer, LoadingOverlay, CardContent, CardTitle, CardId } from './CreditCard.styles'
+import { CardContainer, LoadingOverlay, CardTitle, CardId } from './CreditCard.styles'
 
 /**
  * CreditCard component, displays a (selectable) card with description and ID
@@ -9,7 +9,7 @@ import { CardContainer, LoadingOverlay, CardContent, CardTitle, CardId } from '.
 interface CreditCardProps {
   id: string
   description: string
-  onClick?: React.MouseEventHandler<HTMLDivElement>
+  onClick?: React.MouseEventHandler<HTMLButtonElement>
   isSelected?: boolean
   isLoading?: boolean
 }
@@ -24,11 +24,10 @@ const CreditCard: React.FC<CreditCardProps> = ({
   return (
     <CardContainer id={id} aria-busy={isLoading} $isSelected={isSelected} onClick={onClick}>
       <LoadingOverlay $isLoading={isLoading} aria-hidden="true" />
-      <CardContent $isLoading={isLoading}>
+      <>
         <CardTitle>{description}</CardTitle>
         <CardId $isSelected={isSelected}>ID: {id}</CardId>
-        {/* Other card content */}
-      </CardContent>
+      </>
     </CardContainer>
   )
 }

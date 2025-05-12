@@ -20,7 +20,7 @@ export interface Transaction {
 export async function getCards(): Promise<Card[]> {
   // simulate 1.5s delay
   await new Promise((resolve) => setTimeout(resolve, 1500))
-  const cards = await (await import('./data/cards.json')).default
+  const cards = (await import('./data/cards.json')).default
   if (cards) return cards
 
   throw new Error('No cards found')
@@ -29,9 +29,8 @@ export async function getCards(): Promise<Card[]> {
 export async function getTransactions(cardId: string): Promise<Transaction[]> {
   // simulate 1.5s delay
   await new Promise((resolve) => setTimeout(resolve, 1500))
-  const transactions: Record<string, Transaction[]> = await (
-    await import('./data/transactions.json')
-  ).default
+  const transactions: Record<string, Transaction[]> = (await import('./data/transactions.json'))
+    .default
 
   if (transactions[cardId]) {
     return transactions[cardId]
