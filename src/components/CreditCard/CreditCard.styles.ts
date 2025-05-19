@@ -4,8 +4,8 @@ export const CardContainer = styled.button<{ $isSelected?: boolean; $isLoading?:
   all: unset;
   flex: 0 0 auto;
   opacity: ${(props) => (props.$isLoading ? 0.5 : 1)};
-  width: ${(props) => (props.$isSelected ? '240px' : '180px')};
-  height: ${(props) => (props.$isSelected ? '140px' : '80px')};
+  width: 180px;
+  height: 80px;
   display: flex;
   flex-direction: column;
   background: ${(props) =>

@@ -35,6 +35,10 @@ export const ScrollButton = styled.button<{ $side: 'left' | 'right' }>`
     opacity: 1;
   }
   flex-shrink: 0;
+  // hide button on mobile
+  @media (max-width: 769px) {
+    display: none;
+  }
 `
 
 export const CardsSectionContainer = styled.section``
