@@ -11,12 +11,15 @@ import { useHorizontalScrollControls } from 'hooks/useHorizontalScrollControls'
 import { useCardsContext } from 'contex/CardsContext.tsx'
 
 const CardsSection: React.FC = () => {
-  const { containerRef, scroll } = useHorizontalScrollControls()
+  const { containerRef, scroll, scrollElementToCenter } = useHorizontalScrollControls()
   const { cards, isCardsLoading, selectedCardData, selectedCardId, onCardSelect } =
     useCardsContext()
 
   const handleCardSelect = (e: React.MouseEvent<HTMLButtonElement>) => {
-    onCardSelect(e.currentTarget.id)
+    const cardId = e.currentTarget.id
+    onCardSelect(cardId)
+    // Center the selected card in the view
+    scrollElementToCenter(cardId)
   }
 
   const isLoading = isCardsLoading
