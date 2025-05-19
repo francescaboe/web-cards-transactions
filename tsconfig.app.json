@@ -9,6 +9,8 @@
     "paths": {
       "*": ["./src/*"]
     },
+    "types": ["vitest/globals"],
+
 
     /* Bundler mode */
     "moduleResolution": "bundler",
